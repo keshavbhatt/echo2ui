@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#TODO
+#- usage
+#- better echo2ui resolution
+#- concurrent output of child process from subshell instead of singleshot
+
 # path to log file where we want to  stdout and stderr on error
 LOG_FILE="$1";
 
