@@ -27,11 +27,11 @@ else
     # if path to it was provided
     if [ -n "$LOG_FILE" ]; then
         NOW=$( date )
-        echo "$NOW: $output" >> "$LOG_FILE";
+        echo -e "$NOW: $output\n" >> "$LOG_FILE";
     fi;
     
     # call echo2ui to output the error message
-    echo2ui "Context" "Title" "$output" 60 20
+    ./echo2ui "Context" "Title" "$output" 60 20
 
     # exit with sub shell exit code
     exit "$ec"; 
