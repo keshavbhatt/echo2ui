@@ -6,6 +6,18 @@
 argc=$#
 argv=("$@")
 
+# check if arg is num
+is_num()
+ {
+   re='^[0-9]+$'
+   if ! [[ $1 =~ $re ]] ;
+   then
+       echo -e "\nError: provided argument $1 is not a valid integer \n" 
+       display_usage
+       exit 1
+   fi
+ }
+
 display_usage()
  { 
    bordered_title "echo2ui by keshavnrj@gmail.com"
@@ -35,14 +47,14 @@ display_usage()
  
 
 # bootstap
- : ${PROG=xterm}
+ : ${PROG=stterm} 
  : ${AGENT=whiptail}
 
  export NEWT_COLORS='
    root=,black
  '
 
- TERM='xterm-256color'
+ TERM='st-256color'
  #HEIGHT=$(expr $5 - 5)
  CONTEXT=$1
  
@@ -57,4 +69,4 @@ display_usage()
     AGENT_SIZE="${5} ${4}"
   fi
 
- $PROG -fa -misc-fixed-medium-r-normal--20-200-75-75-c-100-iso8859-1 -fs 12 -title "${CONTEXT}" -geometry "${PROG_GEOMETRY}" -e bash -c "$AGENT --ok-button 'Close' --scrolltext --title '${CONTEXT^^}: ${2}' --msgbox '${3}' ${AGENT_SIZE}"
+ $PROG -f "DejaVu Sans Mono:size=12" -T "${CONTEXT}" -g "${PROG_GEOMETRY}" -e bash -c "$AGENT --ok-button 'Close' ${scrolltext} --title "\""${CONTEXT^^}: ${2}"\"" --msgbox "\""${3}"\"" ${AGENT_SIZE}"
