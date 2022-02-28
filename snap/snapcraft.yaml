@@ -7,25 +7,30 @@ description: |
 
 grade: stable 
 confinement: strict 
+compression: lzo
+
+architectures:
+  - build-on: amd64
+    run-on: amd64
 
 apps:
+  echo2ui:
+   command: bin/echo2ui
+   plugs: &allplugs
+     - desktop
+     - desktop-legacy
+     - opengl
+     - unity7
+     - x11
+     - wayland
+     - home
   launcher:
    command: bin/launcher
+   plugs: *allplugs
 
   crash2ui:
    command: bin/launcher $SNAP/bin/crash.sh
-
-  echo2ui:
-   command: bin/echo2ui
-
-plugs:
-   - desktop
-   - desktop-legacy
-   - opengl
-   - unity7
-   - x11
-   - wayland
-   - home
+   plugs: *allplugs
 
 parts:
   apps:
