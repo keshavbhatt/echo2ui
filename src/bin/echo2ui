@@ -1,10 +1,11 @@
 #! /bin/bash
 
-# source echo2ui util
-. ./echo2ui_utils --source-only
-
 argc=$#
 argv=("$@")
+__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# source echo2ui util
+. ${__dir}/echo2ui_utils --source-only
 
 # check if arg is num
 is_num()

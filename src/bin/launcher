@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# source echo2ui util
-. ./echo2ui_utils --source-only
-
 argc=$#
 argv=("$@")
+__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# source echo2ui util
+. ${__dir}/echo2ui_utils --source-only
 
 display_usage()
  { 
@@ -83,7 +84,6 @@ else
     coutput+="\n\nExit code: $ec"
     
     # call echo2ui to output the error message
-    __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     ${__dir}/echo2ui "Context" "Title" "$coutput" 80 26
 
     # exit with sub shell exit code
