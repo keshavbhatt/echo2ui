@@ -28,7 +28,9 @@ parts:
     plugin: nil
   echo2ui:
     plugin: dump
-    source: src/
+    source-type: local
+    source: ../src/
   bash-crash:
     plugin: dump
-    source: BashCrashExample/
+    source-type: local
+    source: ../BashCrashExample/
