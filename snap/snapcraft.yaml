@@ -49,8 +49,8 @@ parts:
   echo2ui:
     plugin: dump
     source-type: local
-    source: ../src/
+    source: src/
   bash-crash:
     plugin: dump
     source-type: local
-    source: ../BashCrashExample/
+    source: BashCrashExample/
