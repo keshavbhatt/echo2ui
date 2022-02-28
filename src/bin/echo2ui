@@ -75,7 +75,7 @@ display_usage()
   echo $PROG;
  
  if [ "$PROG" == "xterm" ]; then
-   $PROG -fa "-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso8859-1" -fs "12" -title "${CONTEXT}" -geometry "${PROG_GEOMETRY}" -e bash -c "$AGENT --ok-button 'Close' ${scrolltext} --title "\""${CONTEXT^^}: ${2}"\"" --msgbox "\""${3}"\"" ${AGENT_SIZE}"
+   $PROG -fa "-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso8859-1" -fs "10" -title "${CONTEXT}" -geometry "${PROG_GEOMETRY}" -e bash -c "$AGENT --ok-button 'Close' ${scrolltext} --title "\""${CONTEXT^^}: ${2}"\"" --msgbox "\""${3}"\"" ${AGENT_SIZE}"
  else
    $PROG -f "DejaVu Sans Mono:size=12" -T "${CONTEXT}" -g "${PROG_GEOMETRY}" -e bash -c "$AGENT --ok-button 'Close' ${scrolltext} --title "\""${CONTEXT^^}: ${2}"\"" --msgbox "\""${3}"\"" ${AGENT_SIZE}"
  fi
