@@ -38,9 +38,9 @@ LOG_FILE="$2";
 # keeping the exitcode intact
 output="$(
     # exit sub shell with non zero exit 
-    set -ex; 
+    set -e; 
     {
-      "$1" 2>&1 | tee /dev/tty; exit ${PIPESTATUS[0]}
+       bash -c "$1" 2>&1 | tee /dev/tty; exit ${PIPESTATUS[0]}
     };
 )";
 
@@ -63,9 +63,28 @@ else
         echo -e "$NOW: $output\n" >> "$LOG_FILE";
     fi;
     
+    # chop the output to show only last 10 lines
+    coutput=""
+    if [ -n "$LOG_FILE" ]; then
+       coutput+="Complete log stored in: "$LOG_FILE"\n"
+       coutput+=$(repeated_char 70 "_")
+       coutput+="\n\n"
+    fi
+    linescount=$(echo "$output" | wc -l)
+
+    if [ $linescount -gt 10 ]; then
+       coutput+="the output was chopped to 10 lines\n"
+       coutput+=$(repeated_char 70 "_")
+       coutput+="\n\n"
+    fi
+    coutput+=$(echo "$output" | tail -n10)
+    coutput+="\n\n"
+    coutput+=$(repeated_char 70 "_")
+    coutput+="\n\nExit code: $ec"
+    
     # call echo2ui to output the error message
     __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    ${__dir}/echo2ui "Context" "Title" "$output" 0 0
+    ${__dir}/echo2ui "Context" "Title" "$coutput" 80 26
 
     # exit with sub shell exit code
     exit "$ec"; 
