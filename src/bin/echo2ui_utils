@@ -14,15 +14,3 @@ repeated_char() {
   printf "%$1s" | tr " " "$2"
 }
 
-
-# check if arg is num
-is_num()
- {
-   re='^[0-9]+$'
-   if ! [[ $1 =~ $re ]] ;
-   then
-       echo -e "\nError: provided argument $1 is not a valid integer \n" 
-       display_usage
-       exit 1
-   fi
- }
