@@ -20,7 +20,7 @@ apps:
         - wayland
         - home
   crash2ui:
-   command: bin/launcher bin/crash.sh
+   command: bin/launcher $SNAP/bin/crash.sh
    plugs:
         - desktop
         - desktop-legacy
