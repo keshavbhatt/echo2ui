@@ -11,34 +11,22 @@ confinement: strict
 apps:
   launcher:
    command: bin/launcher
-   plugs:
-        - desktop
-        - desktop-legacy
-        - opengl
-        - unity7
-        - x11
-        - wayland
-        - home
+
   crash2ui:
    command: bin/launcher $SNAP/bin/crash.sh
-   plugs:
-        - desktop
-        - desktop-legacy
-        - opengl
-        - unity7
-        - x11
-        - wayland
-        - home
+
   echo2ui:
    command: bin/echo2ui
-   plugs:
-        - desktop
-        - desktop-legacy
-        - opengl
-        - unity7
-        - x11
-        - wayland
-        - home
+
+plugs:
+   - desktop
+   - desktop-legacy
+   - opengl
+   - unity7
+   - x11
+   - wayland
+   - home
+
 parts:
   apps:
     stage-packages:
