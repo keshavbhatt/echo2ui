@@ -1,31 +1,10 @@
 #! /bin/bash
 
-bordered_title() {
-  title="| $1 |"
-  # shellcheck disable=SC2001
-  edge=$(echo "$title" | sed 's/./-/g')
-  echo "$edge"
-  echo "$title"
-  echo "$edge"
-}
+# source echo2ui util
+. ./echo2ui_utils --source-only
 
-# concat $2 $1 times and print
-repeated_char() {
-  printf "%$1s" | tr " " "$2"
-}
-
-
-# check if arg is num
-is_num()
- {
-   re='^[0-9]+$'
-   if ! [[ $1 =~ $re ]] ;
-   then
-       echo -e "\nError: provided argument $1 is not a valid integer \n" 
-       display_usage
-       exit 1
-   fi
- }
+argc=$#
+argv=("$@")
 
 display_usage()
  { 
@@ -49,9 +28,6 @@ display_usage()
    display_usage
    exit 1
  else
-   argc=$#
-   argv=("$@")
-
   for (( k=3; k<argc; k++ )); do
     is_num "${argv[k]}"
   done
@@ -69,6 +45,16 @@ display_usage()
  TERM='xterm-256color'
  #HEIGHT=$(expr $5 - 5)
  CONTEXT=$1
+ 
+ 
+ # change unset geometry if $4 & &5 are 0
+  if [[ "$4" -eq "0" || "$5" -eq "0" ]];
+  then
+    PROG_GEOMETRY="62x20+0+0"
+    AGENT_SIZE="20 62"
+  else
+    PROG_GEOMETRY="${4}x${5}+0+0"
+    AGENT_SIZE="${5} ${4}"
+  fi
 
-
- $PROG -fa -misc-fixed-medium-r-normal--20-200-75-75-c-100-iso8859-1 -fs 12 -title "${CONTEXT}" -geometry ${4}x${5}+0+0 -e bash -c "$AGENT --title '${CONTEXT^^}: ${2}' --msgbox '${3}' '${5}' '${4}'"
+ $PROG -fa -misc-fixed-medium-r-normal--20-200-75-75-c-100-iso8859-1 -fs 12 -title "${CONTEXT}" -geometry "${PROG_GEOMETRY}" -e bash -c "$AGENT --ok-button 'Close' --scrolltext --title '${CONTEXT^^}: ${2}' --msgbox '${3}' ${AGENT_SIZE}"
