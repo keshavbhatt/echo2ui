@@ -1,19 +1,47 @@
 #!/bin/bash
 
-#TODO
-#- usage
-#- better echo2ui resolution
-#- concurrent output of child process from subshell instead of singleshot
+# source echo2ui util
+. ./echo2ui_utils --source-only
 
-# path to log file where we want to  stdout and stderr on error
-LOG_FILE="$1";
+argc=$#
+argv=("$@")
 
+display_usage()
+ { 
+   bordered_title "launcher for echo2ui by keshavnrj@gmail.com"
+   echo -e "\nthis wrapper script will launch the application and bind it to echo2ui\n" 
+   echo -e "\nUsage: $0 [launchable-app or its path] [path to log file](optional)\n" 
+   echo -e "Example 1: $0 wonderwall\n"
+   echo -e "Example 2: $0 wonderwall /tmp/wonderwall.log\n"
+ }
+ 
+ # check whether user had supplied -h or --help . If yes display usage 
+ if [[ ( $* == "--help") ||  $* == "-h" ]] 
+ then 
+   display_usage
+   exit 0
+ fi 
+ 
+ # if less than 2 arguments supplied, display usage 
+ if [[ $* != "--help" || $* != "-h" ]] && [ $# -le 0 ]; 
+ then 
+   echo -e "\nError: insufficient arguments passed \n" 
+   display_usage
+   exit 1
+ fi
+
+# path to log file where we want to stdout and stderr on error
+LOG_FILE="$2";
+
+# save stdout & stderr of sub shell to output,
+# while piping to parent tty
+# keeping the exitcode intact
 output="$(
     # exit sub shell with non zero exit 
     set -ex; 
     {
-      "$2"
-    } 2>&1;
+      "$1" 2>&1 | tee /dev/tty; exit ${PIPESTATUS[0]}
+    };
 )";
 
 # get sub shell exit code
@@ -27,7 +55,7 @@ ec="$?"; if [ $ec -eq 0 ]; then
 else
     # non zero exit code
 
-    echo $output;
+    #echo $output;
     
     # if path to it was provided
     if [ -n "$LOG_FILE" ]; then
@@ -36,7 +64,8 @@ else
     fi;
     
     # call echo2ui to output the error message
-    ./echo2ui "Context" "Title" "$output" 60 20
+    __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    ${__dir}/echo2ui "Context" "Title" "$output" 0 0
 
     # exit with sub shell exit code
     exit "$ec"; 
