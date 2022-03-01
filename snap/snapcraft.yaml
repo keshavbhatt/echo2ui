@@ -28,8 +28,12 @@ apps:
    command: bin/launcher
    plugs: *allplugs
 
-  crash2ui:
+  bash_crash2ui:
    command: bin/launcher $SNAP/bin/crash.sh
+   plugs: *allplugs
+
+  qt_crash2ui:
+   command: bin/launcher $SNAP/bin/crash
    plugs: *allplugs
 
 parts:
@@ -47,3 +51,11 @@ parts:
     plugin: dump
     source-type: local
     source: BashCrashExample/
+  qt-crash:
+    plugin: dump
+    source-type: local
+    source: QtCrashExample/crash/
+    organize:
+      crash: bin/crash
+    stage:
+      - crash
