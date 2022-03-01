@@ -28,6 +28,10 @@ So, we left the user is with no clue by making them unaware why the application 
 
 They will also not be able to report to developers the exact output of the application when it crashed on their system.
 
+**How echo2ui will handle missing .so or any other crash**
+
+![missing-so-error](https://github.com/keshavbhatt/echo2ui/blob/main/images/missing-so.gif?raw=true)
+
 ## Technical information about echo2ui :
 
 The main source code of this project lives in src/ directory that contain 3 scripts as of now:
