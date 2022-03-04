@@ -84,7 +84,7 @@ else
     coutput+="\n\nExit code: $ec"
     
     # call echo2ui to output the error message
-    ${__dir}/echo2ui "Context" "Title" "$coutput" 80 26
+    ${__dir}/echo2ui "Context" "Title" "$coutput" 80 26 > /dev/null 2>&1
 
     # exit with sub shell exit code
     exit "$ec"; 
